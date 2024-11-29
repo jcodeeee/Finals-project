@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Gallery</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        
+        flex-direction: column;
+      }
+
+      .slider {
+        position: relative;
+        width: 90%;
+        max-width: 600px;
+        height: 400px;
+        background-color: #fff;
+        
+        overflow: hidden;
+      }
+
+      .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      .slide.active {
+        opacity: 1;
+      }
+
+      .controls {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        
+      }
+
+      .control {
+        background-color: #fff;
+        padding: 10px 15px;
+        border-radius: 50%;
+        cursor: pointer;
+        
+      }
+
+      .control:hover {
+        background-color: #ddd;
+      }
+
+      .thumbnails {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        overflow-x: auto;
+      }
+
+      .thumbnail {
+        width: 100px;
+        height: 75px;
+        margin: 0 5px;
+        cursor: pointer;
+        transition: transform 0.2s;
+        border: 2px solid transparent;
+      }
+
+      .thumbnail:hover {
+        transform: scale(1.1);
+      }
+
+      .thumbnail.active {
+        border-color: #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="slider">
+        <img src="./Products/Laptop/1.png" alt="Slide 1" class="slide active" />
+        <img src="./Products/Laptop/2.png" alt="Slide 2" class="slide" />
+        <img src="./Products/Laptop/3.png" alt="Slide 3" class="slide" />
+        <img src="./Products/Laptop/1.png" alt="Slide 4" class="slide" />
+        <img src="./Products/Laptop/2.png" alt="Slide 5" class="slide" />
+        <img src="./Products/Laptop/3.png" alt="Slide 6" class="slide" />
+        <div class="controls">
+          <div class="control" id="prev">❮</div>
+          <div class="control" id="next">❯</div>
+        </div>
+      </div>
+      <div class="thumbnails">
+        <img
+          src="./Products/Laptop/1.png"
+          alt="Thumbnail 1"
+          class="thumbnail active"
+          onclick="showSlide(0)"
+        />
+        <img
+          src="./Products/Laptop/2.png"
+          alt="Thumbnail 2"
+          class="thumbnail"
+          onclick="showSlide(1)"
+        />
+        <img
+          src="./Products/Laptop/3.png"
+          alt="Thumbnail 3"
+          class="thumbnail"
+          onclick="showSlide(2)"
+        />
+        <img
+          src="./Products/Laptop/1.png"
+          alt="Thumbnail 4"
+          class="thumbnail active"
+          onclick="showSlide(3)"
+        />
+        <img
+          src="./Products/Laptop/2.png"
+          alt="Thumbnail 5"
+          class="thumbnail"
+          onclick="showSlide(4)"
+        />
+        <img
+          src="./Products/Laptop/3.png"
+          alt="Thumbnail 6"
+          class="thumbnail"
+          onclick="showSlide(5)"
+        />
+      </div>
+    </div>
+
+    <script>
+      let currentSlide = 0;
+      const slides = document.querySelectorAll(".slide");
+      const thumbnails = document.querySelectorAll(".thumbnail");
+      const totalSlides = slides.length;
+
+      document.getElementById("next").addEventListener("click", () => {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlides();
+      });
+
+      document.getElementById("prev").addEventListener("click", () => {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateSlides();
+      });
+
+      function showSlide(index) {
+        currentSlide = index;
+        updateSlides();
+      }
+
+      function updateSlides() {
+        slides.forEach((slide, index) => {
+          slide.classList.toggle("active", index === currentSlide);
+        });
+
+        thumbnails.forEach((thumbnail, index) => {
+          thumbnail.classList.toggle("active", index === currentSlide);
+        });
+      }
+    </script>
+  </body>
+</html>
